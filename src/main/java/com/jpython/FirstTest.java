@@ -1,5 +1,7 @@
 package com.jpython;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.Properties;
@@ -7,40 +9,46 @@ import java.util.Properties;
 import com.entity.TestEntity;
 import com.interfaces.IFirstTest;
 
+import org.python.core.PyFloat;
 import org.python.core.PyFunction;
+import org.python.core.PyInteger;
 import org.python.core.PyObject;
 import org.python.core.PyString;
 import org.python.util.PythonInterpreter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
+
 @Service
 public class FirstTest {
 
     @Autowired
     IFirstTest iFirstTest;
 
-    public static void main(String [] args){
+    public static void main(String[] args) throws IOException {
 
         // 1
         // PythonInterpreter interpreter = new PythonInterpreter();
         // interpreter.exec("a=[5,2,3,9,4,0]");
         // interpreter.exec("print(sorted(a,reverse=True))"); 
 
-        // 2
+        // 2.0
         // PythonInterpreter interpreter =  new PythonInterpreter();
         // interpreter.execfile("D:\\add.py");
 
-        // PyFunction pyFunction = interpreter.get("add",PyFunction.class);
-        // int a = 5;
-        // int b = 10;
+        // 2.1
+        PythonInterpreter interpreter = new PythonInterpreter();
+        ClassPathResource calcPyFile = new ClassPathResource("calculator/calculator-test.py");
+        InputStream inputStream = calcPyFile.getInputStream();
+        interpreter.execfile(inputStream);
 
-        // PyObject pyobj = pyFunction.__call__(new PyInteger(a),new PyInteger(b));
-        // System.out.println("the anwser is:" + pyobj);
+        PyFunction pyFunction = interpreter.get("add",PyFunction.class);
+        int a = 25;
+        int b = 10;
 
-        // 3
-        //    String code = "calculator";
-        //    String method = "add";
-        //     name(code,method);
+        PyObject pyobj = pyFunction.__call__(new PyInteger(a),new PyInteger(b));
+        System.out.println("the anwser is:" + pyobj);
+
     }
 
     //调用python计算
