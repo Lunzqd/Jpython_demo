@@ -1,0 +1,16 @@
+#属性配置
+environment:
+  open-authorization: false
+
+#开发配置
+spring:
+  datasource:
+        driverClassName: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://rm-bp1oydriw2vi7fc68qo.mysql.rds.aliyuncs.com:3306/ins_ordercenter?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=true&serverTimezone=Asia/Shanghai
+        username: user_ic
+        password: Lunz2017
+
+#mybatis
+mybatis-plus:
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.entity
